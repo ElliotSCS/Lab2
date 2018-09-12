@@ -9,7 +9,12 @@ import edu.illinois.cs.cs125.lib.mazemaker.Maze;
  */
 @SuppressWarnings("checkstyle:emptyblock")
 public class SolveMaze {
-
+    /**
+    Returns a random number.
+     */
+    static int random() {
+        return (int) (Math.random() * 2.0);
+    }
     /**
      * Implement your maze solving algorithm in the main method below.
      *
@@ -20,7 +25,7 @@ public class SolveMaze {
         /*
          * Create a new 10 x 10 maze. Feel free to change these values.
          */
-        Maze maze = new Maze(10, 10);
+        Maze maze = new Maze(50, 50);
 
         /*
          * Pick (0, 0), the bottom left corner, as the starting point.
@@ -33,11 +38,45 @@ public class SolveMaze {
          * You should be able to solve a 10 x 10 maze in (far fewer than) 1000 steps.
          * Feel free to adjust this number if you experiment with other mazes.
          */
-        for (int step = 0; step < 1000; step++) {
-            // Implement your maze solving algorithm here
-        }
 
-        if (maze.isFinished()) {
+        /*while (!maze.isFinished()) {
+            maze.turnRight(); // go right if you can
+            if (!maze.canMove()){
+                maze.turnLeft(); // if you cannot, go forward
+                if (maze.canMove()) {
+                    maze.move();
+                } else {
+                        maze.turnLeft(); // if you cannot, go left
+                        if (maze.canMove()) {
+                            maze.move();
+                        } else {
+                            maze.turnLeft();
+                            if (maze.canMove()) {
+                                maze.move();
+                            }  else {
+                                maze.turnLeft();
+                                maze.move();
+                            }
+                        }
+                    }
+                } else {
+                    maze.move();
+                }
+            }*/
+        int counter = 0;
+        while (!maze.isFinished()) {
+            if (maze.canMove()) {
+                maze.move();
+            } else if (random() == 0) {
+                maze.turnRight();
+            } else {
+                maze.turnLeft();
+            }
+            counter++;
+        }
+        System.out.println(counter);
+
+            if (maze.isFinished()) {
             System.out.println("You solved the maze!");
         } else {
             System.out.println("Try again!");
